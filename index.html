@@ -29,8 +29,6 @@
             margin: 0 auto;
             padding: 24px 16px;
         }
-        
-        /* Glassmorphism Card Style */
         .card {
             background: var(--card-bg);
             border-radius: 24px;
@@ -39,7 +37,6 @@
             box-shadow: var(--shadow);
             border: 1px solid rgba(255, 255, 255, 0.8);
         }
-        
         h2 { font-size: 26px; font-weight: 700; color: var(--text-main); margin-bottom: 6px; letter-spacing: -0.5px; }
         h3 { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 16px; }
         p { color: var(--text-muted); font-size: 14px; margin-top: 0; }
@@ -82,11 +79,29 @@
         
         .btn-guest { background: #64748b !important; box-shadow: 0 4px 12px rgba(100, 116, 139, 0.25) !important; margin-top: 10px; }
         .btn-danger { background: #ef4444 !important; width: auto; padding: 8px 14px; font-size: 12px; margin: 0; box-shadow: none !important; }
-        .btn-back { background: #cbd5e1; color: var(--text-main); margin-bottom: 16px; margin-top: 0; box-shadow: none !important; }
+        
+        /* Tombol Navigasi Kembali / Home */
+        .nav-bar-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .btn-home {
+            background: #e2e8f0;
+            color: var(--text-main);
+            width: auto;
+            padding: 8px 14px;
+            font-size: 13px;
+            border-radius: 10px;
+            margin: 0;
+            box-shadow: none !important;
+            font-weight: 600;
+        }
+        .btn-home:hover { background: #cbd5e1; transform: none; }
 
         .hidden { display: none !important; }
 
-        /* Header Dashboard Modern */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -100,7 +115,6 @@
         }
         .user-greeting { font-weight: 700; color: var(--primary); font-size: 16px; margin: 0; }
 
-        /* Dashboard Thumbnail Grid (Card View Utama) */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -161,7 +175,7 @@
 
     <div class="app-wrapper">
         
-        <!-- HALAMAN LOGIN Keren -->
+        <!-- HALAMAN LOGIN -->
         <div id="loginSection" class="card" style="margin-top: 60px; text-align: center;">
             <div style="width: 60px; height: 60px; background: var(--primary-gradient); border-radius: 20px; margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; font-weight: bold;">🌱</div>
             <h2>Wellness Hub</h2>
@@ -230,7 +244,7 @@
                     </div>
 
                     <div class="menu-thumb-card" onclick="openModule('tabAI')">
-                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&auto=format&fit=crop" class="menu-thumb-img" alt="AI">
+                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500&auto=format&fit=crop" class="menu-thumb-img" alt="AI">
                         <div class="menu-thumb-info">
                             <div class="menu-thumb-title">Tanya AI</div>
                             <p class="menu-thumb-desc">Konsultasi gizi & pelatih pribadi.</p>
@@ -242,7 +256,9 @@
 
             <!-- MODUL 1: DAFTAR MENU -->
             <div id="tabMealPlan" class="app-tab hidden">
-                <button class="btn-back" onclick="backToDashboard()">← Kembali ke Menu Utama</button>
+                <div class="nav-bar-top">
+                    <button class="btn-home" onclick="backToDashboard()">🏠 Dashboard</button>
+                </div>
                 <div class="card">
                     <h3>Rencana Makanan</h3>
                     <div id="mealPlanContainer">
@@ -253,7 +269,9 @@
 
             <!-- MODUL 2: CATAT MAKANAN -->
             <div id="tabFoodLog" class="app-tab hidden">
-                <button class="btn-back" onclick="backToDashboard()">← Kembali ke Menu Utama</button>
+                <div class="nav-bar-top">
+                    <button class="btn-home" onclick="backToDashboard()">🏠 Dashboard</button>
+                </div>
                 <div class="card">
                     <h3>Catat Makanan & Foto</h3>
                     <label>Unggah Foto Makanan</label>
@@ -283,7 +301,9 @@
 
             <!-- MODUL 3: STOK DAPUR -->
             <div id="tabPantry" class="app-tab hidden">
-                <button class="btn-back" onclick="backToDashboard()">← Kembali ke Menu Utama</button>
+                <div class="nav-bar-top">
+                    <button class="btn-home" onclick="backToDashboard()">🏠 Dashboard</button>
+                </div>
                 <div class="card">
                     <h3>Manajemen Stok Dapur</h3>
                     <label>Nama Bahan / Bumbu</label>
@@ -300,7 +320,9 @@
 
             <!-- MODUL 4: REKAM MEDIS -->
             <div id="tabMedical" class="app-tab hidden">
-                <button class="btn-back" onclick="backToDashboard()">← Kembali ke Menu Utama</button>
+                <div class="nav-bar-top">
+                    <button class="btn-home" onclick="backToDashboard()">🏠 Dashboard</button>
+                </div>
                 <div class="card">
                     <h3>Rekam Medis & Lab</h3>
                     <label>Tanggal Pemeriksaan</label>
@@ -317,7 +339,9 @@
 
             <!-- MODUL 5: TANYA AI -->
             <div id="tabAI" class="app-tab hidden">
-                <button class="btn-back" onclick="backToDashboard()">← Kembali ke Menu Utama</button>
+                <div class="nav-bar-top">
+                    <button class="btn-home" onclick="backToDashboard()">🏠 Dashboard</button>
+                </div>
                 <div class="card">
                     <h3>Konsultasi Ahli Gizi AI</h3>
                     <label>Tulis Pertanyaan Anda</label>

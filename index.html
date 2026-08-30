@@ -114,7 +114,7 @@
         .btn-guest { background: #64748b !important; margin-top: 8px; box-shadow: none !important; }
         .btn-danger { background: #ef4444 !important; width: auto; padding: 6px 12px; font-size: 11px; margin: 0; box-shadow: none !important; }
         
-        /* Navigasi Kembali di Sub-menu */
+        /* Tombol Kembali di Sub-menu */
         .nav-bar-top {
             display: flex;
             justify-content: space-between;
@@ -136,7 +136,7 @@
 
         .hidden { display: none !important; }
 
-        /* Header Gaya Referensi (Logo di atas, sapaan di bawah) */
+        /* Header Dashboard */
         .app-header-top {
             text-align: center;
             padding: 12px 0 16px 0;
@@ -164,7 +164,7 @@
         }
         .user-greeting { font-weight: 700; color: var(--primary); font-size: 15px; margin: 0; }
 
-        /* Dashboard Grid Kartu Ala Referensi */
+        /* Grid Dashboard Utama */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -205,14 +205,14 @@
         }
     </style>
 </head>
-<body id="bodyTag">
+<body id="bodyTag" class="login-body">
 
     <div class="app-wrapper" id="wrapperTag">
         
-        <!-- HALAMAN LOGIN GLASSMORPHISM -->
+        <!-- HALAMAN LOGIN DENGAN Logo.png -->
         <div id="loginSection" class="login-card">
             <div style="margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center;">
-                <img src="Logo.PNG" alt="Logo" style="width: 80px; height: 80px; border-radius: 20px; object-fit: cover; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2);" onerror="this.style.display='none'">
+                <img src="Logo.png" alt="Logo" style="width: 80px; height: 80px; border-radius: 20px; object-fit: cover; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2);" onerror="this.style.display='none'">
             </div>
             
             <div style="text-align: left;">
@@ -230,12 +230,12 @@
         <!-- DASHBOARD UTAMA -->
         <div id="dashboardSection" class="hidden" style="width: 100%;">
             
-            <!-- Header Logo & Tombol Keluar -->
+            <!-- Header Logo -->
             <div class="app-header-top">
-                <img src="Logo.PNG" alt="Logo" class="app-header-logo" onerror="this.style.display='none'">
+                <img src="Logo.png" alt="Logo" class="app-header-logo" onerror="this.style.display='none'">
             </div>
 
-            <!-- Kartu Sapaan -->
+            <!-- Kartu Sapaan Pengguna -->
             <div class="greeting-card">
                 <div>
                     <p style="margin:0; font-size: 11px; color: var(--text-muted);">Selamat datang,</p>

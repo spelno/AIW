@@ -22,7 +22,6 @@
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            -webkit-font-smoothing: antialiased;
         }
         .app-wrapper {
             max-width: 480px;
@@ -34,7 +33,7 @@
             border-radius: 16px;
             padding: 24px;
             margin-bottom: 20px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
             border: 1px solid var(--border-color);
         }
         h2 { font-size: 24px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
@@ -51,13 +50,11 @@
             font-size: 14px;
             font-family: 'Inter', sans-serif;
             background-color: #fdfdfd;
-            transition: all 0.2s ease;
         }
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
-            background-color: #fff;
         }
         button {
             width: 100%;
@@ -70,18 +67,14 @@
             font-weight: 600;
             font-size: 14px;
             margin-top: 16px;
-            transition: background 0.2s, transform 0.1s;
+            transition: background 0.2s;
         }
         button:hover { background-color: var(--primary-dark); }
-        button:active { transform: scale(0.98); }
         .btn-guest { background-color: #64748b !important; margin-top: 8px; }
-        .btn-guest:hover { background-color: #475569 !important; }
         .btn-danger { background-color: #ef4444 !important; width: auto; padding: 8px 14px; font-size: 12px; margin: 0; }
-        .btn-danger:hover { background-color: #dc2626 !important; }
 
         .hidden { display: none !important; }
 
-        /* Header Dashboard */
         .dashboard-header {
             display: flex;
             justify-content: space-between;
@@ -94,7 +87,6 @@
         }
         .user-greeting { font-weight: 700; color: var(--primary-dark); font-size: 16px; margin: 0; }
 
-        /* Navigasi Tab Estetik */
         .nav-tabs {
             display: flex;
             gap: 8px;
@@ -120,7 +112,7 @@
             font-weight: 600;
         }
 
-        /* Thumbnail Grid Layout */
+        /* Thumbnail Grid & Card View */
         .thumbnail-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -132,9 +124,13 @@
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
             border: 1px solid var(--border-color);
-            transition: transform 0.2s;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .thumb-card:hover { transform: translateY(-2px); }
+        .thumb-card:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
         .thumb-img {
             width: 100%;
             height: 180px;
@@ -145,6 +141,21 @@
         .thumb-title { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
         .thumb-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
         .badge { background: var(--primary-light); color: var(--primary-dark); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; }
+
+        /* Modal Detail Card */
+        #detailModal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000;
+        }
+        .modal-card {
+            background: #fff;
+            width: 90%; max-width: 400px;
+            padding: 24px; border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -155,17 +166,12 @@
         <div id="loginSection" class="card" style="margin-top: 80px;">
             <h2>Selamat Datang</h2>
             <p>Masuk ke panel asisten kesehatan pribadi Anda.</p>
-            
             <label>Username</label>
-            <input type="text" id="username" placeholder="Masukkan username (cth: OD)">
-            
+            <input type="text" id="username" placeholder="cth: OD">
             <label>Password</label>
             <input type="password" id="password" placeholder="Masukkan password">
-            
             <button onclick="handleLogin()">Masuk</button>
-            
             <div style="text-align: center; margin: 16px 0 8px 0; color: var(--text-muted); font-size: 12px;">atau</div>
-            
             <button class="btn-guest" onclick="handleGuestLogin()">Masuk sebagai Guest</button>
         </div>
 
@@ -176,33 +182,32 @@
                 <button class="btn-danger" onclick="handleLogout()">Keluar</button>
             </div>
 
-            <!-- Navigasi Menu -->
             <div class="nav-tabs">
-                <button class="active" onclick="switchTab('tabMealPlan', this)">Meal Plan</button>
+                <button class="active" onclick="switchTab('tabMealPlan', this)">Daftar Menu</button>
                 <button onclick="switchTab('tabFoodLog', this)">Catat Makanan</button>
                 <button onclick="switchTab('tabPantry', this)">Stok Dapur</button>
                 <button onclick="switchTab('tabMedical', this)">Rekam Medis</button>
                 <button onclick="switchTab('tabAI', this)">Tanya AI</button>
             </div>
 
-            <!-- TAB 1: MEAL PLAN & THUMBNAILS -->
+            <!-- TAB 1: KARTU THUMBNAIL SEMUA MENU -->
             <div id="tabMealPlan" class="app-tab">
                 <div class="card" style="padding: 16px;">
-                    <button onclick="loadMealPlan()" style="margin-top: 0;">Muat Rencana Menu</button>
-                    <div id="mealPlanContainer" class="thumbnail-grid" style="margin-top: 16px;">
-                        <p style="text-align: center; color: var(--text-muted); padding: 20px 0;">Klik tombol muat untuk melihat menu.</p>
+                    <h3 style="margin-top: 0;">Galeri Menu & Rencana Makanan</h3>
+                    <p style="font-size: 12px; margin-bottom: 15px;">Ketuk salah satu kartu menu di bawah untuk melihat detail lengkapnya.</p>
+                    <div id="mealPlanContainer" class="thumbnail-grid">
+                        <p style="text-align: center; color: var(--text-muted); padding: 20px 0;">Memuat menu...</p>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB 2: CATAT MAKANAN & FOTO -->
+            <!-- TAB 2: CATAT MAKANAN -->
             <div id="tabFoodLog" class="app-tab hidden">
                 <div class="card">
                     <h3>Pencatat Makanan & Foto Pintar</h3>
-                    <label>Unggah Foto Makanan:</label>
+                    <label>Unggah Foto Makanan</label>
                     <input type="file" id="foodPhoto" accept="image/*">
                     <button onclick="processFoodPhoto()" style="background-color: #3b82f6;">Analisis Foto dengan AI</button>
-                    
                     <label>Waktu Makan</label>
                     <select id="waktuMakan">
                         <option value="Sarapan">Sarapan</option>
@@ -210,36 +215,28 @@
                         <option value="Makan Malam">Makan Malam</option>
                         <option value="Cemilan">Cemilan</option>
                     </select>
-                    
                     <label>Nama Makanan</label>
                     <input type="text" id="namaMakanan" placeholder="cth: Nasi Merah + Dada Ayam">
-                    
                     <label>Porsi (Gram)</label>
                     <input type="number" id="porsiGram" value="100">
-                    
                     <label>Kalori (kkal)</label>
                     <input type="number" id="kalori" value="0">
-                    
                     <button onclick="submitFoodLog()">Simpan ke Riwayat</button>
                 </div>
             </div>
 
-            <!-- TAB 3: PANTRY / STOK DAPUR -->
+            <!-- TAB 3: STOK DAPUR -->
             <div id="tabPantry" class="app-tab hidden">
                 <div class="card">
                     <h3>Manajemen Stok Dapur</h3>
                     <label>Nama Bahan / Bumbu</label>
                     <input type="text" id="namaBahan" placeholder="cth: Bawang Putih">
-                    
                     <label>Kategori</label>
                     <input type="text" id="kategoriBahan" placeholder="cth: Bumbu / Protein">
-                    
                     <label>Jumlah / Stok</label>
                     <input type="number" id="jumlahBahan" placeholder="cth: 5">
-                    
                     <label>Satuan</label>
-                    <input type="text" id="satuanBahan" placeholder="cth: Siung / Gram / Botol">
-                    
+                    <input type="text" id="satuanBahan" placeholder="cth: Siung / Gram">
                     <button onclick="submitPantry()">Tambah ke Stok</button>
                 </div>
             </div>
@@ -250,38 +247,41 @@
                     <h3>Rekam Medis & Lab</h3>
                     <label>Tanggal Pemeriksaan</label>
                     <input type="date" id="medDate">
-                    
                     <label>Jenis Pemeriksaan</label>
                     <input type="text" id="jenisTes" placeholder="cth: Tes Darah Rutin">
-                    
                     <label>Parameter / Hasil</label>
                     <input type="text" id="parameterHasil" placeholder="cth: Kolesterol Total 190 mg/dL">
-                    
                     <label>Catatan / Saran Dokter</label>
                     <textarea id="catatanDokter" placeholder="Masukkan catatan..." rows="3"></textarea>
-                    
                     <button onclick="submitMedical()">Simpan Rekam Medis</button>
                 </div>
             </div>
 
-            <!-- TAB 5: TANYA AI & Konsultasi -->
+            <!-- TAB 5: TANYA AI -->
             <div id="tabAI" class="app-tab hidden">
                 <div class="card">
                     <h3>Konsultasi Ahli Gizi AI</h3>
                     <label>Tulis Pertanyaan Anda</label>
-                    <textarea id="aiQuestion" placeholder="cth: Bolehkah saya mengganti dada ayam dengan ikan hari ini?" rows="4"></textarea>
-                    
+                    <textarea id="aiQuestion" placeholder="cth: Bolehkah mengganti dada ayam dengan ikan?" rows="4"></textarea>
                     <button onclick="askAI()">Kirim Pertanyaan</button>
-                    
                     <div id="aiResponseContainer" style="margin-top: 16px; background: var(--primary-light); padding: 16px; border-radius: 12px; border-left: 4px solid var(--primary); display:none;">
                         <strong style="color: var(--primary-dark);">Jawaban AI:</strong>
-                        <p id="aiReplyText" style="margin: 8px 0 0 0; color: var(--text-main);"></p>
+                        <p id="aiReplyText" style="margin: 8px 0 0 0;"></p>
                     </div>
                 </div>
             </div>
 
         </div>
 
+    </div>
+
+    <!-- MODAL DETAIL KARTU -->
+    <div id="detailModal" class="hidden">
+        <div class="modal-card">
+            <h3 id="modalTitle" style="color: var(--primary-dark);">Detail Menu</h3>
+            <p id="modalInfo" style="margin-bottom: 15px;"></p>
+            <button onclick="closeModal()">Tutup</button>
+        </div>
     </div>
 
     <script>
@@ -355,7 +355,7 @@
                 if (data.status === "success" && data.data.length > 0) {
                     data.data.forEach(item => {
                         let cardHTML = `
-                            <div class="thumb-card">
+                            <div class="thumb-card" onclick="openDetail('${item.namaMenu}', '${item.hari}', '${item.waktuMakan}', '${item.kaloriTarget}')">
                                 <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop" class="thumb-img" alt="Menu">
                                 <div class="thumb-content">
                                     <div class="thumb-title">${item.namaMenu}</div>
@@ -372,6 +372,16 @@
             });
         }
 
+        function openDetail(namaMenu, hari, waktu, kalori) {
+            document.getElementById('modalTitle').innerText = namaMenu;
+            document.getElementById('modalInfo').innerHTML = `<strong>Jadwal:</strong> ${hari} (${waktu})<br><strong>Target Kalori:</strong> ${kalori} kkal<br><br><em>Menu ini dirancang khusus untuk menjaga keseimbangan nutrisi harian Anda.</em>`;
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+        }
+
         function processFoodPhoto() {
             let fileInput = document.getElementById('foodPhoto');
             if (fileInput.files.length === 0) {
@@ -383,7 +393,6 @@
             reader.onload = function(e) {
                 let base64Data = e.target.result.split(',')[1];
                 alert("Menganalisis foto dengan AI...");
-                
                 fetch(GAS_URL, {
                     method: "POST",
                     body: JSON.stringify({ action: "analyzeFoodPhoto", imageBase64: base64Data, mimeType: file.type })

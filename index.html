@@ -14,7 +14,7 @@
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            --shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
         }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -22,83 +22,67 @@
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden; /* Mencegah Scroll pada Halaman Utama */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .app-wrapper {
-            max-width: 480px;
-            margin: 0 auto;
-            padding: 24px 16px;
+            width: 100%;
+            max-width: 440px;
+            padding: 12px;
+            box-sizing: border-box;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .card {
             background: var(--card-bg);
-            border-radius: 24px;
-            padding: 28px;
-            margin-bottom: 20px;
+            border-radius: 20px;
+            padding: 20px;
             box-shadow: var(--shadow);
             border: 1px solid rgba(255, 255, 255, 0.8);
         }
-        h2 { font-size: 26px; font-weight: 700; color: var(--text-main); margin-bottom: 6px; letter-spacing: -0.5px; }
-        h3 { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 16px; }
-        p { color: var(--text-muted); font-size: 14px; margin-top: 0; }
+        h2 { font-size: 22px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+        h3 { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
+        p { color: var(--text-muted); font-size: 13px; margin-top: 0; }
         
-        label { display: block; font-size: 13px; font-weight: 600; color: var(--text-main); margin-bottom: 6px; margin-top: 14px; }
+        label { display: block; font-size: 12px; font-weight: 600; color: var(--text-main); margin-bottom: 4px; margin-top: 10px; }
         input, select, textarea {
             width: 100%;
-            padding: 14px 16px;
+            padding: 10px 14px;
             border: 2px solid var(--border-color);
-            border-radius: 14px;
+            border-radius: 12px;
             box-sizing: border-box;
-            font-size: 14px;
+            font-size: 13px;
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #f8fafc;
-            transition: all 0.3s ease;
         }
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
             background-color: #fff;
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
         }
         
         button {
             width: 100%;
-            padding: 14px 16px;
+            padding: 12px;
             background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: 14px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: 700;
-            font-size: 15px;
-            margin-top: 18px;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
-            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 14px;
+            margin-top: 14px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
         }
-        button:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35); }
-        button:active { transform: translateY(0); }
+        button:hover { opacity: 0.95; }
         
-        .btn-guest { background: #64748b !important; box-shadow: 0 4px 12px rgba(100, 116, 139, 0.25) !important; margin-top: 10px; }
-        .btn-danger { background: #ef4444 !important; width: auto; padding: 8px 14px; font-size: 12px; margin: 0; box-shadow: none !important; }
-        
-        /* Tombol Navigasi Kembali / Home */
-        .nav-bar-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        .btn-home {
-            background: #e2e8f0;
-            color: var(--text-main);
-            width: auto;
-            padding: 8px 14px;
-            font-size: 13px;
-            border-radius: 10px;
-            margin: 0;
-            box-shadow: none !important;
-            font-weight: 600;
-        }
-        .btn-home:hover { background: #cbd5e1; transform: none; }
+        .btn-guest { background: #64748b !important; margin-top: 8px; }
+        .btn-danger { background: #ef4444 !important; width: auto; padding: 6px 10px; font-size: 11px; margin: 0; box-shadow: none !important; }
 
         .hidden { display: none !important; }
 
@@ -106,68 +90,68 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 14px;
             background: #fff;
-            padding: 16px 20px;
-            border-radius: 20px;
+            padding: 12px 16px;
+            border-radius: 16px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
         }
-        .user-greeting { font-weight: 700; color: var(--primary); font-size: 16px; margin: 0; }
+        .user-greeting { font-weight: 700; color: var(--primary); font-size: 14px; margin: 0; }
 
+        /* Dashboard Grid 2-3 Baris Tanpa Scroll */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
         }
         .menu-thumb-card {
             background: #fff;
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 15px -3px rgba(0,0,0,0.05);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
             border: 1px solid var(--border-color);
             cursor: pointer;
+            text-align: center;
+            padding: 12px 8px;
+            transition: transform 0.15s;
+        }
+        .menu-thumb-card:hover { transform: translateY(-2px); border-color: #10b981; }
+        
+        /* Kartu Terakhir (Tanya AI) Dibuat Melebar 2 Kolom */
+        .menu-thumb-card.wide {
+            grid-column: span 2;
             display: flex;
             align-items: center;
-            padding: 12px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .menu-thumb-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 20px -5px rgba(16, 185, 129, 0.15);
-            border-color: #10b981;
+            padding: 10px 16px;
+            text-align: left;
         }
         .menu-thumb-img {
-            width: 75px;
-            height: 75px;
-            border-radius: 14px;
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
             object-fit: cover;
             background-color: #f1f5f9;
-            flex-shrink: 0;
+            margin: 0 auto 6px auto;
+            display: block;
         }
-        .menu-thumb-info {
-            padding-left: 16px;
-            flex-grow: 1;
+        .menu-thumb-card.wide .menu-thumb-img {
+            margin: 0 12px 0 0;
+            width: 40px;
+            height: 40px;
         }
         .menu-thumb-title {
-            font-size: 16px;
+            font-size: 13px;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 4px;
-        }
-        .menu-thumb-desc {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin: 0;
         }
         
         .list-item-card {
             background: #fff;
             border: 1px solid var(--border-color);
-            padding: 16px;
-            border-radius: 14px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 8px;
         }
     </style>
 </head>
@@ -176,181 +160,138 @@
     <div class="app-wrapper">
         
         <!-- HALAMAN LOGIN -->
-        <div id="loginSection" class="card" style="margin-top: 60px; text-align: center;">
-            <div style="width: 60px; height: 60px; background: var(--primary-gradient); border-radius: 20px; margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; font-weight: bold;">🌱</div>
+        <div id="loginSection" class="card" style="text-align: center;">
+            <div style="margin: 0 auto 12px auto; display: flex; align-items: center; justify-content: center;">
+                <img src="Logo.PNG" alt="Logo" style="width: 65px; height: 65px; border-radius: 16px; object-fit: cover; box-shadow: 0 6px 12px rgba(0,0,0,0.1);" onerror="this.style.display='none'">
+            </div>
             <h2>Wellness Hub</h2>
-            <p style="margin-bottom: 24px;">Asisten Gizi & Kesehatan Pribadi Anda</p>
+            <p style="margin-bottom: 16px;">Asisten Gizi & Kesehatan Pribadi</p>
             
             <div style="text-align: left;">
                 <label>Username</label>
                 <input type="text" id="username" placeholder="cth: OD">
-                
                 <label>Password</label>
                 <input type="password" id="password" placeholder="Masukkan password">
             </div>
             
-            <button onclick="handleLogin()">Masuk Aplikasi</button>
-            
-            <div style="margin: 20px 0 10px 0; color: var(--text-muted); font-size: 13px; font-weight: 500;">atau</div>
-            
+            <button onclick="handleLogin()">Masuk</button>
             <button class="btn-guest" onclick="handleGuestLogin()">Masuk sebagai Guest</button>
         </div>
 
-        <!-- DASHBOARD UTAMA (THUMBNAIL CARD VIEW) -->
-        <div id="dashboardSection" class="hidden">
+        <!-- DASHBOARD UTAMA (2-3 BARIS TANPA SCROLL) -->
+        <div id="dashboardSection" class="hidden" style="width: 100%;">
             <div class="dashboard-header">
                 <div>
-                    <p style="margin:0; font-size: 12px; color: var(--text-muted);">Selamat Datang,</p>
-                    <h3 id="welcomeUser" class="user-greeting" style="margin:0;">Halo!</h3>
+                    <p style="margin:0; font-size: 11px; color: var(--text-muted);">Halo,</p>
+                    <h3 id="welcomeUser" class="user-greeting" style="margin:0;">User</h3>
                 </div>
                 <button class="btn-danger" onclick="handleLogout()">Keluar</button>
             </div>
 
-            <!-- TAMPILAN KARTU THUMBNAIL UTAMA -->
-            <div id="mainMenuGrid">
-                <h3 style="margin-bottom: 14px; padding-left: 4px;">Menu Utama</h3>
+            <div id="mainMenuGrid" class="card" style="padding: 14px;">
+                <h3 style="margin-bottom: 10px; font-size: 14px;">Menu Utama</h3>
                 <div class="dashboard-grid">
                     
                     <div class="menu-thumb-card" onclick="openModule('tabMealPlan')">
-                        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300&auto=format&fit=crop" class="menu-thumb-img" alt="Menu">
-                        <div class="menu-thumb-info">
-                            <div class="menu-thumb-title">Daftar Menu</div>
-                            <p class="menu-thumb-desc">Lihat rencana menu sehat harian.</p>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=200&auto=format&fit=crop" class="menu-thumb-img" alt="Menu">
+                        <div class="menu-thumb-title">Daftar Menu</div>
                     </div>
 
                     <div class="menu-thumb-card" onclick="openModule('tabFoodLog')">
-                        <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=300&auto=format&fit=crop" class="menu-thumb-img" alt="Catat">
-                        <div class="menu-thumb-info">
-                            <div class="menu-thumb-title">Catat Makanan</div>
-                            <p class="menu-thumb-desc">Analisis foto & kalori makanan.</p>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=200&auto=format&fit=crop" class="menu-thumb-img" alt="Catat">
+                        <div class="menu-thumb-title">Catat Makanan</div>
                     </div>
 
                     <div class="menu-thumb-card" onclick="openModule('tabPantry')">
-                        <img src="https://images.unsplash.com/photo-1584776296944-ab6fb579cfff?w=300&auto=format&fit=crop" class="menu-thumb-img" alt="Stok">
-                        <div class="menu-thumb-info">
-                            <div class="menu-thumb-title">Stok Dapur</div>
-                            <p class="menu-thumb-desc">Kelola bahan & bumbu kulkas.</p>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1584776296944-ab6fb579cfff?w=200&auto=format&fit=crop" class="menu-thumb-img" alt="Stok">
+                        <div class="menu-thumb-title">Stok Dapur</div>
                     </div>
 
                     <div class="menu-thumb-card" onclick="openModule('tabMedical')">
-                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=300&auto=format&fit=crop" class="menu-thumb-img" alt="Medis">
-                        <div class="menu-thumb-info">
-                            <div class="menu-thumb-title">Rekam Medis</div>
-                            <p class="menu-thumb-desc">Pantau hasil lab & kesehatan.</p>
-                        </div>
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=200&auto=format&fit=crop" class="menu-thumb-img" alt="Medis">
+                        <div class="menu-thumb-title">Rekam Medis</div>
                     </div>
 
-                    <div class="menu-thumb-card" onclick="openModule('tabAI')">
-                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500&auto=format&fit=crop" class="menu-thumb-img" alt="AI">
-                        <div class="menu-thumb-info">
-                            <div class="menu-thumb-title">Tanya AI</div>
-                            <p class="menu-thumb-desc">Konsultasi gizi & pelatih pribadi.</p>
-                        </div>
+                    <div class="menu-thumb-card wide" onclick="openModule('tabAI')">
+                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&auto=format&fit=crop" class="menu-thumb-img" alt="AI">
+                        <div class="menu-thumb-title">Tanya AI & Konsultasi</div>
                     </div>
 
                 </div>
             </div>
 
             <!-- MODUL 1: DAFTAR MENU -->
-            <div id="tabMealPlan" class="app-tab hidden">
-                <div class="nav-bar-top">
-                    <button class="btn-home" onclick="backToDashboard()">🏠 Dashboard</button>
-                </div>
-                <div class="card">
-                    <h3>Rencana Makanan</h3>
-                    <div id="mealPlanContainer">
-                        <p style="text-align: center; color: var(--text-muted); padding: 20px 0;">Memuat menu...</p>
-                    </div>
+            <div id="tabMealPlan" class="app-tab hidden card">
+                <h3>Rencana Makanan</h3>
+                <div id="mealPlanContainer" style="max-height: 220px; overflow-y: auto;">
+                    <p style="text-align: center; color: var(--text-muted); padding: 10px 0;">Memuat menu...</p>
                 </div>
             </div>
 
             <!-- MODUL 2: CATAT MAKANAN -->
-            <div id="tabFoodLog" class="app-tab hidden">
-                <div class="nav-bar-top">
-                    <button class="btn-home" onclick="backToDashboard()">🏠 Dashboard</button>
-                </div>
-                <div class="card">
-                    <h3>Catat Makanan & Foto</h3>
-                    <label>Unggah Foto Makanan</label>
-                    <input type="file" id="foodPhoto" accept="image/*">
-                    <button onclick="processFoodPhoto()" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);">Analisis Foto dengan AI</button>
-                    
-                    <label>Waktu Makan</label>
-                    <select id="waktuMakan">
-                        <option value="Sarapan">Sarapan</option>
-                        <option value="Makan Siang">Makan Siang</option>
-                        <option value="Makan Malam">Makan Malam</option>
-                        <option value="Cemilan">Cemilan</option>
-                    </select>
-                    
-                    <label>Nama Makanan</label>
-                    <input type="text" id="namaMakanan" placeholder="cth: Nasi Merah + Dada Ayam">
-                    
-                    <label>Porsi (Gram)</label>
-                    <input type="number" id="porsiGram" value="100">
-                    
-                    <label>Kalori (kkal)</label>
-                    <input type="number" id="kalori" value="0">
-                    
-                    <button onclick="submitFoodLog()">Simpan ke Riwayat</button>
-                </div>
+            <div id="tabFoodLog" class="app-tab hidden card" style="max-height: 80vh; overflow-y: auto;">
+                <h3>Catat Makanan & Foto</h3>
+                <label>Foto Makanan</label>
+                <input type="file" id="foodPhoto" accept="image/*">
+                <button onclick="processFoodPhoto()" style="background: #3b82f6; margin-top: 8px;">Analisis AI</button>
+                
+                <label>Waktu Makan</label>
+                <select id="waktuMakan">
+                    <option value="Sarapan">Sarapan</option>
+                    <option value="Makan Siang">Makan Siang</option>
+                    <option value="Makan Malam">Makan Malam</option>
+                    <option value="Cemilan">Cemilan</option>
+                </select>
+                
+                <label>Nama Makanan</label>
+                <input type="text" id="namaMakanan" placeholder="cth: Nasi Merah + Ayam">
+                
+                <label>Porsi (Gram)</label>
+                <input type="number" id="porsiGram" value="100">
+                
+                <label>Kalori (kkal)</label>
+                <input type="number" id="kalori" value="0">
+                
+                <button onclick="submitFoodLog()">Simpan</button>
             </div>
 
             <!-- MODUL 3: STOK DAPUR -->
-            <div id="tabPantry" class="app-tab hidden">
-                <div class="nav-bar-top">
-                    <button class="btn-home" onclick="backToDashboard()">🏠 Dashboard</button>
-                </div>
-                <div class="card">
-                    <h3>Manajemen Stok Dapur</h3>
-                    <label>Nama Bahan / Bumbu</label>
-                    <input type="text" id="namaBahan" placeholder="cth: Bawang Putih">
-                    <label>Kategori</label>
-                    <input type="text" id="kategoriBahan" placeholder="cth: Bumbu / Protein">
-                    <label>Jumlah / Stok</label>
-                    <input type="number" id="jumlahBahan" placeholder="cth: 5">
-                    <label>Satuan</label>
-                    <input type="text" id="satuanBahan" placeholder="cth: Siung / Gram">
-                    <button onclick="submitPantry()">Tambah ke Stok</button>
-                </div>
+            <div id="tabPantry" class="app-tab hidden card">
+                <h3>Stok Dapur</h3>
+                <label>Nama Bahan / Bumbu</label>
+                <input type="text" id="namaBahan" placeholder="cth: Bawang Putih">
+                <label>Kategori</label>
+                <input type="text" id="kategoriBahan" placeholder="cth: Bumbu">
+                <label>Jumlah</label>
+                <input type="number" id="jumlahBahan" placeholder="cth: 5">
+                <label>Satuan</label>
+                <input type="text" id="satuanBahan" placeholder="cth: Siung">
+                <button onclick="submitPantry()">Tambah Stok</button>
             </div>
 
             <!-- MODUL 4: REKAM MEDIS -->
-            <div id="tabMedical" class="app-tab hidden">
-                <div class="nav-bar-top">
-                    <button class="btn-home" onclick="backToDashboard()">🏠 Dashboard</button>
-                </div>
-                <div class="card">
-                    <h3>Rekam Medis & Lab</h3>
-                    <label>Tanggal Pemeriksaan</label>
-                    <input type="date" id="medDate">
-                    <label>Jenis Pemeriksaan</label>
-                    <input type="text" id="jenisTes" placeholder="cth: Tes Darah Rutin">
-                    <label>Parameter / Hasil</label>
-                    <input type="text" id="parameterHasil" placeholder="cth: Kolesterol 190 mg/dL">
-                    <label>Catatan / Saran Dokter</label>
-                    <textarea id="catatanDokter" placeholder="Masukkan catatan..." rows="3"></textarea>
-                    <button onclick="submitMedical()">Simpan Rekam Medis</button>
-                </div>
+            <div id="tabMedical" class="app-tab hidden card">
+                <h3>Rekam Medis & Lab</h3>
+                <label>Tanggal</label>
+                <input type="date" id="medDate">
+                <label>Jenis Pemeriksaan</label>
+                <input type="text" id="jenisTes" placeholder="cth: Tes Darah">
+                <label>Hasil</label>
+                <input type="text" id="parameterHasil" placeholder="cth: Kolesterol 190">
+                <label>Catatan</label>
+                <textarea id="catatanDokter" placeholder="Catatan..." rows="2"></textarea>
+                <button onclick="submitMedical()">Simpan</button>
             </div>
 
             <!-- MODUL 5: TANYA AI -->
-            <div id="tabAI" class="app-tab hidden">
-                <div class="nav-bar-top">
-                    <button class="btn-home" onclick="backToDashboard()">🏠 Dashboard</button>
-                </div>
-                <div class="card">
-                    <h3>Konsultasi Ahli Gizi AI</h3>
-                    <label>Tulis Pertanyaan Anda</label>
-                    <textarea id="aiQuestion" placeholder="cth: Bolehkah mengganti dada ayam dengan ikan?" rows="4"></textarea>
-                    <button onclick="askAI()">Kirim Pertanyaan</button>
-                    <div id="aiResponseContainer" style="margin-top: 16px; background: #ecfdf5; padding: 16px; border-radius: 14px; border-left: 4px solid var(--primary); display:none;">
-                        <strong style="color: #047857;">Jawaban AI:</strong>
-                        <p id="aiReplyText" style="margin: 8px 0 0 0; color: var(--text-main);"></p>
-                    </div>
+            <div id="tabAI" class="app-tab hidden card">
+                <h3>Konsultasi AI</h3>
+                <label>Pertanyaan</label>
+                <textarea id="aiQuestion" placeholder="Tanyakan sesuatu..." rows="3"></textarea>
+                <button onclick="askAI()">Kirim</button>
+                <div id="aiResponseContainer" style="margin-top: 10px; background: #ecfdf5; padding: 10px; border-radius: 10px; border-left: 3px solid var(--primary); display:none; font-size: 12px;">
+                    <strong style="color: #047857;">Jawaban:</strong>
+                    <p id="aiReplyText" style="margin: 4px 0 0 0;"></p>
                 </div>
             </div>
 
@@ -420,11 +361,6 @@
             }
         }
 
-        function backToDashboard() {
-            document.querySelectorAll('.app-tab').forEach(el => el.classList.add('hidden'));
-            document.getElementById('mainMenuGrid').classList.remove('hidden');
-        }
-
         function loadMealPlan() {
             fetch(GAS_URL, {
                 method: "POST",
@@ -438,15 +374,15 @@
                     data.data.forEach(item => {
                         let cardHTML = `
                             <div class="list-item-card">
-                                <div style="font-weight: 700; color: var(--primary); font-size: 16px;">${item.namaMenu}</div>
-                                <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">📅 ${item.hari} • ⏰ ${item.waktuMakan}</div>
-                                <div style="margin-top: 10px;"><span style="background: #ecfdf5; color: #047857; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;">Target: ${item.kaloriTarget} kkal</span></div>
+                                <div style="font-weight: 700; color: var(--primary); font-size: 14px;">${item.namaMenu}</div>
+                                <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">📅 ${item.hari} • ⏰ ${item.waktuMakan}</div>
+                                <div style="margin-top: 6px;"><span style="background: #ecfdf5; color: #047857; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;">Target: ${item.kaloriTarget} kkal</span></div>
                             </div>
                         `;
                         container.innerHTML += cardHTML;
                     });
                 } else {
-                    container.innerHTML = "<p style='text-align:center; color: var(--text-muted); padding: 20px 0;'>Belum ada rencana menu untuk akun ini.</p>";
+                    container.innerHTML = "<p style='text-align:center; color: var(--text-muted); padding: 10px 0;'>Belum ada rencana menu.</p>";
                 }
             });
         }
@@ -473,7 +409,7 @@
                         document.getElementById('namaMakanan').value = info.namaMakanan || "";
                         document.getElementById('porsiGram').value = info.porsiGram || 100;
                         document.getElementById('kalori').value = info.kalori || 0;
-                        alert("Analisis selesai! Periksa form pencatatan.");
+                        alert("Analisis selesai!");
                     } else {
                         alert("Gagal menganalisis foto: " + resData.message);
                     }
@@ -493,7 +429,7 @@
             };
             fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) })
             .then(res => res.json())
-            .then(data => { alert(data.message); });
+            .then(data => { alert(data.message); showDashboard(); });
         }
 
         function submitPantry() {
@@ -507,7 +443,7 @@
             };
             fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) })
             .then(res => res.json())
-            .then(data => { alert(data.message); });
+            .then(data => { alert(data.message); showDashboard(); });
         }
 
         function submitMedical() {
@@ -522,7 +458,7 @@
             };
             fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) })
             .then(res => res.json())
-            .then(data => { alert(data.message); });
+            .then(data => { alert(data.message); showDashboard(); });
         }
 
         function askAI() {

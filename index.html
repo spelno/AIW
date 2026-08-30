@@ -4,126 +4,176 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Wellness & Nutrition Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2e7d32;
-            --primary-light: #4caf50;
-            --bg-color: #f4f6f8;
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --primary-light: #ecfdf5;
+            --bg-color: #f8fafc;
             --card-bg: #ffffff;
-            --text-color: #333333;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
         }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             margin: 0;
             padding: 0;
+            -webkit-font-smoothing: antialiased;
         }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+        .app-wrapper {
+            max-width: 480px;
+            margin: 40px auto;
+            padding: 0 16px;
         }
         .card {
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 24px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
         }
-        h2, h3 { color: var(--primary); margin-top: 0; }
-        input, select, textarea, button {
+        h2 { font-size: 24px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+        h3 { font-size: 18px; font-weight: 600; color: var(--text-main); margin-bottom: 16px; border-bottom: 2px solid var(--primary-light); padding-bottom: 8px; }
+        p { color: var(--text-muted); font-size: 14px; margin-top: 0; }
+        
+        label { display: block; font-size: 13px; font-weight: 600; color: var(--text-main); margin-bottom: 6px; margin-top: 14px; }
+        input, select, textarea {
             width: 100%;
-            padding: 12px;
-            margin: 8px 0 16px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
             box-sizing: border-box;
             font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfdfd;
+            transition: all 0.2s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+            background-color: #fff;
         }
         button {
-            background-color: var(--primary-light);
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--primary);
             color: white;
             border: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-        button:hover { background-color: var(--primary); }
-        .btn-guest { background-color: #757575 !important; }
-        .hidden { display: none !important; }
-        
-        /* Thumbnail Card Layout */
-        .thumbnail-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-        .thumb-card {
-            background: #fff;
             border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 16px;
+            transition: background 0.2s, transform 0.1s;
         }
-        .thumb-img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            background-color: #e0e0e0;
+        button:hover { background-color: var(--primary-dark); }
+        button:active { transform: scale(0.98); }
+        .btn-guest { background-color: #64748b !important; margin-top: 8px; }
+        .btn-guest:hover { background-color: #475569 !important; }
+        .btn-danger { background-color: #ef4444 !important; width: auto; padding: 8px 14px; font-size: 12px; margin: 0; }
+        .btn-danger:hover { background-color: #dc2626 !important; }
+
+        .hidden { display: none !important; }
+
+        /* Header Dashboard */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 16px 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
         }
-        .thumb-content {
-            padding: 15px;
-        }
-        .thumb-title { font-size: 18px; font-weight: bold; margin-bottom: 5px; color: var(--primary); }
-        .thumb-desc { font-size: 14px; color: #666; margin-bottom: 10px; }
-        .badge { background: #e8f5e9; color: var(--primary); padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
-        
+        .user-greeting { font-weight: 700; color: var(--primary-dark); font-size: 16px; margin: 0; }
+
+        /* Navigasi Tab Estetik */
         .nav-tabs {
             display: flex;
-            gap: 5px;
+            gap: 8px;
             overflow-x: auto;
             margin-bottom: 20px;
-            padding-bottom: 5px;
+            padding-bottom: 4px;
+            scrollbar-width: none;
         }
+        .nav-tabs::-webkit-scrollbar { display: none; }
         .nav-tabs button {
             margin: 0;
             white-space: nowrap;
-            background: #e0e0e0;
-            color: #333;
+            background: #e2e8f0;
+            color: var(--text-main);
             font-size: 13px;
-            padding: 8px 12px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-weight: 500;
         }
         .nav-tabs button.active {
             background: var(--primary);
             color: white;
+            font-weight: 600;
         }
+
+        /* Thumbnail Grid Layout */
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        .thumb-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+        .thumb-card:hover { transform: translateY(-2px); }
+        .thumb-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #f1f5f9;
+        }
+        .thumb-content { padding: 16px; }
+        .thumb-title { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+        .thumb-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+        .badge { background: var(--primary-light); color: var(--primary-dark); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; display: inline-block; }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="app-wrapper">
         
         <!-- HALAMAN LOGIN -->
-        <div id="loginSection" class="card" style="margin-top: 50px;">
-            <h2>Wellness Login</h2>
-            <p>Silakan masuk untuk memantau kesehatan Anda.</p>
-            <input type="text" id="username" placeholder="Username (cth: OD)">
-            <input type="password" id="password" placeholder="Password (cth: Maleto)">
+        <div id="loginSection" class="card" style="margin-top: 80px;">
+            <h2>Selamat Datang</h2>
+            <p>Masuk ke panel asisten kesehatan pribadi Anda.</p>
+            
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Masukkan username (cth: OD)">
+            
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Masukkan password">
+            
             <button onclick="handleLogin()">Masuk</button>
             
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+            <div style="text-align: center; margin: 16px 0 8px 0; color: var(--text-muted); font-size: 12px;">atau</div>
             
-            <!-- Tombol Guest Paling Bawah Tanpa Password -->
             <button class="btn-guest" onclick="handleGuestLogin()">Masuk sebagai Guest</button>
         </div>
 
-        <!-- DASHBOARD UTAMA (TERSEMBUNYI SEBELUM LOGIN) -->
+        <!-- DASHBOARD UTAMA -->
         <div id="dashboardSection" class="hidden">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 id="welcomeUser" style="margin:0;">Halo, User!</h3>
-                <button onclick="handleLogout()" style="width: auto; padding: 6px 12px; background: #d32f2f; font-size: 12px;">Keluar</button>
+            <div class="dashboard-header">
+                <h3 id="welcomeUser" class="user-greeting">Halo!</h3>
+                <button class="btn-danger" onclick="handleLogout()">Keluar</button>
             </div>
 
             <!-- Navigasi Menu -->
@@ -137,11 +187,10 @@
 
             <!-- TAB 1: MEAL PLAN & THUMBNAILS -->
             <div id="tabMealPlan" class="app-tab">
-                <div class="card">
-                    <h3>Rencana Menu Harian Anda</h3>
-                    <button onclick="loadMealPlan()">Muat Rencana Menu</button>
-                    <div id="mealPlanContainer" class="thumbnail-grid" style="margin-top: 15px;">
-                        <p style="text-align: center; color: #777;">Klik tombol muat untuk melihat menu.</p>
+                <div class="card" style="padding: 16px;">
+                    <button onclick="loadMealPlan()" style="margin-top: 0;">Muat Rencana Menu</button>
+                    <div id="mealPlanContainer" class="thumbnail-grid" style="margin-top: 16px;">
+                        <p style="text-align: center; color: var(--text-muted); padding: 20px 0;">Klik tombol muat untuk melihat menu.</p>
                     </div>
                 </div>
             </div>
@@ -150,13 +199,11 @@
             <div id="tabFoodLog" class="app-tab hidden">
                 <div class="card">
                     <h3>Pencatat Makanan & Foto Pintar</h3>
-                    <label>Ambil atau Unggah Foto Makanan:</label>
+                    <label>Unggah Foto Makanan:</label>
                     <input type="file" id="foodPhoto" accept="image/*">
-                    <button onclick="processFoodPhoto()">Analisis Foto dengan AI</button>
+                    <button onclick="processFoodPhoto()" style="background-color: #3b82f6;">Analisis Foto dengan AI</button>
                     
-                    <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-                    
-                    <label>Waktu Makan:</label>
+                    <label>Waktu Makan</label>
                     <select id="waktuMakan">
                         <option value="Sarapan">Sarapan</option>
                         <option value="Makan Siang">Makan Siang</option>
@@ -164,13 +211,13 @@
                         <option value="Cemilan">Cemilan</option>
                     </select>
                     
-                    <label>Nama Makanan:</label>
+                    <label>Nama Makanan</label>
                     <input type="text" id="namaMakanan" placeholder="cth: Nasi Merah + Dada Ayam">
                     
-                    <label>Porsi (Gram):</label>
+                    <label>Porsi (Gram)</label>
                     <input type="number" id="porsiGram" value="100">
                     
-                    <label>Kalori (kkal):</label>
+                    <label>Kalori (kkal)</label>
                     <input type="number" id="kalori" value="0">
                     
                     <button onclick="submitFoodLog()">Simpan ke Riwayat</button>
@@ -181,10 +228,18 @@
             <div id="tabPantry" class="app-tab hidden">
                 <div class="card">
                     <h3>Manajemen Stok Dapur</h3>
-                    <input type="text" id="namaBahan" placeholder="Nama Bahan / Bumbu (cth: Bawang Putih)">
-                    <input type="text" id="kategoriBahan" placeholder="Kategori (cth: Bumbu / Protein)">
-                    <input type="number" id="jumlahBahan" placeholder="Jumlah / Stok">
-                    <input type="text" id="satuanBahan" placeholder="Satuan (cth: Siung / Gram / Botol)">
+                    <label>Nama Bahan / Bumbu</label>
+                    <input type="text" id="namaBahan" placeholder="cth: Bawang Putih">
+                    
+                    <label>Kategori</label>
+                    <input type="text" id="kategoriBahan" placeholder="cth: Bumbu / Protein">
+                    
+                    <label>Jumlah / Stok</label>
+                    <input type="number" id="jumlahBahan" placeholder="cth: 5">
+                    
+                    <label>Satuan</label>
+                    <input type="text" id="satuanBahan" placeholder="cth: Siung / Gram / Botol">
+                    
                     <button onclick="submitPantry()">Tambah ke Stok</button>
                 </div>
             </div>
@@ -193,10 +248,18 @@
             <div id="tabMedical" class="app-tab hidden">
                 <div class="card">
                     <h3>Rekam Medis & Lab</h3>
+                    <label>Tanggal Pemeriksaan</label>
                     <input type="date" id="medDate">
-                    <input type="text" id="jenisTes" placeholder="Jenis Pemeriksaan (cth: Tes Darah Rutin)">
-                    <input type="text" id="parameterHasil" placeholder="Parameter / Hasil (cth: Kolesterol 190 mg/dL)">
-                    <textarea id="catatanDokter" placeholder="Catatan / Saran Dokter" rows="3"></textarea>
+                    
+                    <label>Jenis Pemeriksaan</label>
+                    <input type="text" id="jenisTes" placeholder="cth: Tes Darah Rutin">
+                    
+                    <label>Parameter / Hasil</label>
+                    <input type="text" id="parameterHasil" placeholder="cth: Kolesterol Total 190 mg/dL">
+                    
+                    <label>Catatan / Saran Dokter</label>
+                    <textarea id="catatanDokter" placeholder="Masukkan catatan..." rows="3"></textarea>
+                    
                     <button onclick="submitMedical()">Simpan Rekam Medis</button>
                 </div>
             </div>
@@ -204,12 +267,15 @@
             <!-- TAB 5: TANYA AI & Konsultasi -->
             <div id="tabAI" class="app-tab hidden">
                 <div class="card">
-                    <h3>Konsultasi Ahli Gizi & Pelatih AI</h3>
-                    <textarea id="aiQuestion" placeholder="Tanyakan sesuatu (cth: Bolehkah saya mengganti dada ayam dengan ikan hari ini?)" rows="4"></textarea>
+                    <h3>Konsultasi Ahli Gizi AI</h3>
+                    <label>Tulis Pertanyaan Anda</label>
+                    <textarea id="aiQuestion" placeholder="cth: Bolehkah saya mengganti dada ayam dengan ikan hari ini?" rows="4"></textarea>
+                    
                     <button onclick="askAI()">Kirim Pertanyaan</button>
-                    <div id="aiResponseContainer" style="margin-top: 15px; background: #f9f9f9; padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary); display:none;">
-                        <strong>Jawaban AI:</strong>
-                        <p id="aiReplyText" style="margin: 5px 0 0 0;"></p>
+                    
+                    <div id="aiResponseContainer" style="margin-top: 16px; background: var(--primary-light); padding: 16px; border-radius: 12px; border-left: 4px solid var(--primary); display:none;">
+                        <strong style="color: var(--primary-dark);">Jawaban AI:</strong>
+                        <p id="aiReplyText" style="margin: 8px 0 0 0; color: var(--text-main);"></p>
                     </div>
                 </div>
             </div>
@@ -219,7 +285,6 @@
     </div>
 
     <script>
-        // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzsJMwAhuDrnKJ2yfxHmjwKuFXrSF-lsc83U5X10GhyCnlwEAg3eH3YcuyVoLmzTlZS/exec"; 
 
         let currentUser = localStorage.getItem('loggedUser') || null;
@@ -267,7 +332,7 @@
         function showDashboard() {
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('dashboardSection').classList.remove('hidden');
-            document.getElementById('welcomeUserinnerText').innerText = "Halo, " + currentUser + "!";
+            document.getElementById('welcomeUser').innerText = "Halo, " + currentUser + "!";
             loadMealPlan();
         }
 
@@ -294,7 +359,7 @@
                                 <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop" class="thumb-img" alt="Menu">
                                 <div class="thumb-content">
                                     <div class="thumb-title">${item.namaMenu}</div>
-                                    <div class="thumb-desc">${item.hari} - ${item.waktuMakan}</div>
+                                    <div class="thumb-desc">${item.hari} • ${item.waktuMakan}</div>
                                     <span class="badge">Target: ${item.kaloriTarget} kkal</span>
                                 </div>
                             </div>
@@ -302,7 +367,7 @@
                         container.innerHTML += cardHTML;
                     });
                 } else {
-                    container.innerHTML = "<p style='text-align:center; color:#777;'>Belum ada rencana menu untuk akun ini.</p>";
+                    container.innerHTML = "<p style='text-align:center; color:var(--text-muted); padding: 20px 0;'>Belum ada rencana menu untuk akun ini.</p>";
                 }
             });
         }

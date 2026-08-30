@@ -14,7 +14,7 @@
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
-            --shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
         }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -22,8 +22,7 @@
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            height: 100vh;
-            overflow: hidden; /* Mencegah Scroll pada Halaman Utama */
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -31,28 +30,59 @@
         .app-wrapper {
             width: 100%;
             max-width: 440px;
-            padding: 12px;
+            padding: 16px;
             box-sizing: border-box;
-            height: 100%;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: flex-start;
+        }
+        
+        /* Glassmorphism Login */
+        .login-body {
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 50%, #064e3b 100%);
+            height: 100vh;
+            overflow: hidden;
+            align-items: center;
             justify-content: center;
         }
+        .login-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 28px;
+            padding: 32px 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+            text-align: center;
+            margin: auto;
+        }
+        .login-card label { color: #94a3b8; text-align: left; }
+        .login-card input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+        .login-card input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
         .card {
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 20px;
             box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
         }
-        h2 { font-size: 22px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
         h3 { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
         p { color: var(--text-muted); font-size: 13px; margin-top: 0; }
         
-        label { display: block; font-size: 12px; font-weight: 600; color: var(--text-main); margin-bottom: 4px; margin-top: 10px; }
+        label { display: block; font-size: 12px; font-weight: 600; color: var(--text-main); margin-bottom: 6px; margin-top: 12px; }
         input, select, textarea {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 14px;
             border: 2px solid var(--border-color);
             border-radius: 12px;
             box-sizing: border-box;
@@ -68,80 +98,100 @@
         
         button {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             cursor: pointer;
             font-weight: 700;
             font-size: 14px;
-            margin-top: 14px;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            margin-top: 16px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
         }
         button:hover { opacity: 0.95; }
         
-        .btn-guest { background: #64748b !important; margin-top: 8px; }
-        .btn-danger { background: #ef4444 !important; width: auto; padding: 6px 10px; font-size: 11px; margin: 0; box-shadow: none !important; }
-
-        .hidden { display: none !important; }
-
-        .dashboard-header {
+        .btn-guest { background: #64748b !important; margin-top: 8px; box-shadow: none !important; }
+        .btn-danger { background: #ef4444 !important; width: auto; padding: 6px 12px; font-size: 11px; margin: 0; box-shadow: none !important; }
+        
+        /* Navigasi Kembali di Sub-menu */
+        .nav-bar-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 14px;
-            background: #fff;
-            padding: 12px 16px;
+        }
+        .btn-back {
+            background: #e2e8f0;
+            color: var(--text-main);
+            width: auto;
+            padding: 8px 14px;
+            font-size: 12px;
+            border-radius: 10px;
+            margin: 0;
+            box-shadow: none !important;
+            font-weight: 600;
+        }
+        .btn-back:hover { background: #cbd5e1; }
+
+        .hidden { display: none !important; }
+
+        /* Header Gaya Referensi (Logo di atas, sapaan di bawah) */
+        .app-header-top {
+            text-align: center;
+            padding: 12px 0 16px 0;
+        }
+        .app-header-logo {
+            width: 60px;
+            height: 60px;
             border-radius: 16px;
+            object-fit: cover;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            border: 2px solid white;
+            margin-bottom: 4px;
+        }
+        
+        .greeting-card {
+            background: #fff;
+            padding: 16px 20px;
+            border-radius: 20px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .user-greeting { font-weight: 700; color: var(--primary); font-size: 14px; margin: 0; }
+        .user-greeting { font-weight: 700; color: var(--primary); font-size: 15px; margin: 0; }
 
-        /* Dashboard Grid 2-3 Baris Tanpa Scroll */
+        /* Dashboard Grid Kartu Ala Referensi */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 12px;
         }
         .menu-thumb-card {
             background: #fff;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
             border: 1px solid var(--border-color);
             cursor: pointer;
             text-align: center;
-            padding: 12px 8px;
-            transition: transform 0.15s;
+            padding: 20px 12px;
+            transition: transform 0.15s, border-color 0.15s;
         }
-        .menu-thumb-card:hover { transform: translateY(-2px); border-color: #10b981; }
-        
-        /* Kartu Terakhir (Tanya AI) Dibuat Melebar 2 Kolom */
-        .menu-thumb-card.wide {
-            grid-column: span 2;
-            display: flex;
-            align-items: center;
-            padding: 10px 16px;
-            text-align: left;
-        }
+        .menu-thumb-card:hover { transform: translateY(-2px); border-color: var(--primary); }
         .menu-thumb-img {
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
             object-fit: cover;
             background-color: #f1f5f9;
-            margin: 0 auto 6px auto;
+            margin: 0 auto 10px auto;
             display: block;
         }
-        .menu-thumb-card.wide .menu-thumb-img {
-            margin: 0 12px 0 0;
-            width: 40px;
-            height: 40px;
-        }
         .menu-thumb-title {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
             color: var(--text-main);
         }
@@ -149,47 +199,54 @@
         .list-item-card {
             background: #fff;
             border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 8px;
+            padding: 14px;
+            border-radius: 14px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
-<body>
+<body id="bodyTag">
 
-    <div class="app-wrapper">
+    <div class="app-wrapper" id="wrapperTag">
         
-        <!-- HALAMAN LOGIN -->
-        <div id="loginSection" class="card" style="text-align: center;">
-            <div style="margin: 0 auto 12px auto; display: flex; align-items: center; justify-content: center;">
-                <img src="Logo.PNG" alt="Logo" style="width: 65px; height: 65px; border-radius: 16px; object-fit: cover; box-shadow: 0 6px 12px rgba(0,0,0,0.1);" onerror="this.style.display='none'">
+        <!-- HALAMAN LOGIN GLASSMORPHISM -->
+        <div id="loginSection" class="login-card">
+            <div style="margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center;">
+                <img src="Logo.PNG" alt="Logo" style="width: 80px; height: 80px; border-radius: 20px; object-fit: cover; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2);" onerror="this.style.display='none'">
             </div>
-            <h2>Wellness Hub</h2>
-            <p style="margin-bottom: 16px;">Asisten Gizi & Kesehatan Pribadi</p>
             
             <div style="text-align: left;">
                 <label>Username</label>
-                <input type="text" id="username" placeholder="cth: OD">
+                <input type="text" id="username" placeholder="Masukkan username">
+                
                 <label>Password</label>
                 <input type="password" id="password" placeholder="Masukkan password">
             </div>
             
-            <button onclick="handleLogin()">Masuk</button>
+            <button onclick="handleLogin()">LOGIN</button>
             <button class="btn-guest" onclick="handleGuestLogin()">Masuk sebagai Guest</button>
         </div>
 
-        <!-- DASHBOARD UTAMA (2-3 BARIS TANPA SCROLL) -->
+        <!-- DASHBOARD UTAMA -->
         <div id="dashboardSection" class="hidden" style="width: 100%;">
-            <div class="dashboard-header">
+            
+            <!-- Header Logo & Tombol Keluar -->
+            <div class="app-header-top">
+                <img src="Logo.PNG" alt="Logo" class="app-header-logo" onerror="this.style.display='none'">
+            </div>
+
+            <!-- Kartu Sapaan -->
+            <div class="greeting-card">
                 <div>
-                    <p style="margin:0; font-size: 11px; color: var(--text-muted);">Halo,</p>
+                    <p style="margin:0; font-size: 11px; color: var(--text-muted);">Selamat datang,</p>
                     <h3 id="welcomeUser" class="user-greeting" style="margin:0;">User</h3>
                 </div>
                 <button class="btn-danger" onclick="handleLogout()">Keluar</button>
             </div>
 
-            <div id="mainMenuGrid" class="card" style="padding: 14px;">
-                <h3 style="margin-bottom: 10px; font-size: 14px;">Menu Utama</h3>
+            <!-- Grid Menu Utama -->
+            <div id="mainMenuGrid">
+                <h3 style="margin-bottom: 12px; font-size: 15px; padding-left: 4px;">Fitur Utama</h3>
                 <div class="dashboard-grid">
                     
                     <div class="menu-thumb-card" onclick="openModule('tabMealPlan')">
@@ -212,86 +269,85 @@
                         <div class="menu-thumb-title">Rekam Medis</div>
                     </div>
 
-                    <div class="menu-thumb-card wide" onclick="openModule('tabAI')">
-                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&auto=format&fit=crop" class="menu-thumb-img" alt="AI">
-                        <div class="menu-thumb-title">Tanya AI & Konsultasi</div>
-                    </div>
-
                 </div>
             </div>
 
             <!-- MODUL 1: DAFTAR MENU -->
-            <div id="tabMealPlan" class="app-tab hidden card">
-                <h3>Rencana Makanan</h3>
-                <div id="mealPlanContainer" style="max-height: 220px; overflow-y: auto;">
-                    <p style="text-align: center; color: var(--text-muted); padding: 10px 0;">Memuat menu...</p>
+            <div id="tabMealPlan" class="app-tab hidden">
+                <div class="nav-bar-top">
+                    <button class="btn-back" onclick="backToDashboard()">← Kembali</button>
+                </div>
+                <div class="card">
+                    <h3>Rencana Makanan</h3>
+                    <div id="mealPlanContainer" style="max-height: 300px; overflow-y: auto;">
+                        <p style="text-align: center; color: var(--text-muted); padding: 15px 0;">Memuat menu...</p>
+                    </div>
                 </div>
             </div>
 
             <!-- MODUL 2: CATAT MAKANAN -->
-            <div id="tabFoodLog" class="app-tab hidden card" style="max-height: 80vh; overflow-y: auto;">
-                <h3>Catat Makanan & Foto</h3>
-                <label>Foto Makanan</label>
-                <input type="file" id="foodPhoto" accept="image/*">
-                <button onclick="processFoodPhoto()" style="background: #3b82f6; margin-top: 8px;">Analisis AI</button>
-                
-                <label>Waktu Makan</label>
-                <select id="waktuMakan">
-                    <option value="Sarapan">Sarapan</option>
-                    <option value="Makan Siang">Makan Siang</option>
-                    <option value="Makan Malam">Makan Malam</option>
-                    <option value="Cemilan">Cemilan</option>
-                </select>
-                
-                <label>Nama Makanan</label>
-                <input type="text" id="namaMakanan" placeholder="cth: Nasi Merah + Ayam">
-                
-                <label>Porsi (Gram)</label>
-                <input type="number" id="porsiGram" value="100">
-                
-                <label>Kalori (kkal)</label>
-                <input type="number" id="kalori" value="0">
-                
-                <button onclick="submitFoodLog()">Simpan</button>
+            <div id="tabFoodLog" class="app-tab hidden">
+                <div class="nav-bar-top">
+                    <button class="btn-back" onclick="backToDashboard()">← Kembali</button>
+                </div>
+                <div class="card">
+                    <h3>Catat Makanan</h3>
+                    <label>Waktu Makan</label>
+                    <select id="waktuMakan">
+                        <option value="Sarapan">Sarapan</option>
+                        <option value="Makan Siang">Makan Siang</option>
+                        <option value="Makan Malam">Makan Malam</option>
+                        <option value="Cemilan">Cemilan</option>
+                    </select>
+                    
+                    <label>Nama Makanan</label>
+                    <input type="text" id="namaMakanan" placeholder="cth: Nasi Merah + Ayam">
+                    
+                    <label>Porsi (Gram)</label>
+                    <input type="number" id="porsiGram" value="100">
+                    
+                    <label>Kalori (kkal)</label>
+                    <input type="number" id="kalori" value="0">
+                    
+                    <button onclick="submitFoodLog()">Simpan Makanan</button>
+                </div>
             </div>
 
             <!-- MODUL 3: STOK DAPUR -->
-            <div id="tabPantry" class="app-tab hidden card">
-                <h3>Stok Dapur</h3>
-                <label>Nama Bahan / Bumbu</label>
-                <input type="text" id="namaBahan" placeholder="cth: Bawang Putih">
-                <label>Kategori</label>
-                <input type="text" id="kategoriBahan" placeholder="cth: Bumbu">
-                <label>Jumlah</label>
-                <input type="number" id="jumlahBahan" placeholder="cth: 5">
-                <label>Satuan</label>
-                <input type="text" id="satuanBahan" placeholder="cth: Siung">
-                <button onclick="submitPantry()">Tambah Stok</button>
+            <div id="tabPantry" class="app-tab hidden">
+                <div class="nav-bar-top">
+                    <button class="btn-back" onclick="backToDashboard()">← Kembali</button>
+                </div>
+                <div class="card">
+                    <h3>Stok Dapur</h3>
+                    <label>Nama Bahan / Bumbu</label>
+                    <input type="text" id="namaBahan" placeholder="cth: Bawang Putih">
+                    <label>Kategori</label>
+                    <input type="text" id="kategoriBahan" placeholder="cth: Bumbu">
+                    <label>Jumlah</label>
+                    <input type="number" id="jumlahBahan" placeholder="cth: 5">
+                    <label>Satuan</label>
+                    <input type="text" id="satuanBahan" placeholder="cth: Siung">
+                    <button onclick="submitPantry()">Tambah Stok</button>
+                </div>
             </div>
 
             <!-- MODUL 4: REKAM MEDIS -->
-            <div id="tabMedical" class="app-tab hidden card">
-                <h3>Rekam Medis & Lab</h3>
-                <label>Tanggal</label>
-                <input type="date" id="medDate">
-                <label>Jenis Pemeriksaan</label>
-                <input type="text" id="jenisTes" placeholder="cth: Tes Darah">
-                <label>Hasil</label>
-                <input type="text" id="parameterHasil" placeholder="cth: Kolesterol 190">
-                <label>Catatan</label>
-                <textarea id="catatanDokter" placeholder="Catatan..." rows="2"></textarea>
-                <button onclick="submitMedical()">Simpan</button>
-            </div>
-
-            <!-- MODUL 5: TANYA AI -->
-            <div id="tabAI" class="app-tab hidden card">
-                <h3>Konsultasi AI</h3>
-                <label>Pertanyaan</label>
-                <textarea id="aiQuestion" placeholder="Tanyakan sesuatu..." rows="3"></textarea>
-                <button onclick="askAI()">Kirim</button>
-                <div id="aiResponseContainer" style="margin-top: 10px; background: #ecfdf5; padding: 10px; border-radius: 10px; border-left: 3px solid var(--primary); display:none; font-size: 12px;">
-                    <strong style="color: #047857;">Jawaban:</strong>
-                    <p id="aiReplyText" style="margin: 4px 0 0 0;"></p>
+            <div id="tabMedical" class="app-tab hidden">
+                <div class="nav-bar-top">
+                    <button class="btn-back" onclick="backToDashboard()">← Kembali</button>
+                </div>
+                <div class="card">
+                    <h3>Rekam Medis & Lab</h3>
+                    <label>Tanggal</label>
+                    <input type="date" id="medDate">
+                    <label>Jenis Pemeriksaan</label>
+                    <input type="text" id="jenisTes" placeholder="cth: Tes Darah">
+                    <label>Hasil</label>
+                    <input type="text" id="parameterHasil" placeholder="cth: Kolesterol 190">
+                    <label>Catatan</label>
+                    <textarea id="catatanDokter" placeholder="Catatan dokter..." rows="3"></textarea>
+                    <button onclick="submitMedical()">Simpan Rekam Medis</button>
                 </div>
             </div>
 
@@ -342,11 +398,13 @@
             currentUser = null;
             document.getElementById('dashboardSection').classList.add('hidden');
             document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('bodyTag').classList.add('login-body');
         }
 
         function showDashboard() {
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('dashboardSection').classList.remove('hidden');
+            document.getElementById('bodyTag').classList.remove('login-body');
             document.getElementById('welcomeUser').innerText = currentUser;
             document.getElementById('mainMenuGrid').classList.remove('hidden');
             document.querySelectorAll('.app-tab').forEach(el => el.classList.add('hidden'));
@@ -359,6 +417,11 @@
             if (tabId === 'tabMealPlan') {
                 loadMealPlan();
             }
+        }
+
+        function backToDashboard() {
+            document.querySelectorAll('.app-tab').forEach(el => el.classList.add('hidden'));
+            document.getElementById('mainMenuGrid').classList.remove('hidden');
         }
 
         function loadMealPlan() {
@@ -387,37 +450,6 @@
             });
         }
 
-        function processFoodPhoto() {
-            let fileInput = document.getElementById('foodPhoto');
-            if (fileInput.files.length === 0) {
-                alert("Pilih foto terlebih dahulu!");
-                return;
-            }
-            let file = fileInput.files[0];
-            let reader = new FileReader();
-            reader.onload = function(e) {
-                let base64Data = e.target.result.split(',')[1];
-                alert("Menganalisis foto dengan AI...");
-                fetch(GAS_URL, {
-                    method: "POST",
-                    body: JSON.stringify({ action: "analyzeFoodPhoto", imageBase64: base64Data, mimeType: file.type })
-                })
-                .then(res => res.json())
-                .then(resData => {
-                    if (resData.status === "success") {
-                        let info = resData.data;
-                        document.getElementById('namaMakanan').value = info.namaMakanan || "";
-                        document.getElementById('porsiGram').value = info.porsiGram || 100;
-                        document.getElementById('kalori').value = info.kalori || 0;
-                        alert("Analisis selesai!");
-                    } else {
-                        alert("Gagal menganalisis foto: " + resData.message);
-                    }
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-
         function submitFoodLog() {
             let payload = {
                 action: "logFood",
@@ -429,7 +461,7 @@
             };
             fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) })
             .then(res => res.json())
-            .then(data => { alert(data.message); showDashboard(); });
+            .then(data => { alert(data.message); backToDashboard(); });
         }
 
         function submitPantry() {
@@ -443,7 +475,7 @@
             };
             fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) })
             .then(res => res.json())
-            .then(data => { alert(data.message); showDashboard(); });
+            .then(data => { alert(data.message); backToDashboard(); });
         }
 
         function submitMedical() {
@@ -453,31 +485,11 @@
                 tanggal: document.getElementById('medDate').value,
                 jenisPemeriksaan: document.getElementById('jenisTes').value,
                 parameter: document.getElementById('parameterHasil').value,
-                catatan: document.getElementById('catatanDokter').value,
-                rekomendasiAI: "Evaluasi mandiri"
+                catatan: document.getElementById('catatanDokter').value
             };
             fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) })
             .then(res => res.json())
-            .then(data => { alert(data.message); showDashboard(); });
-        }
-
-        function askAI() {
-            let question = document.getElementById('aiQuestion').value;
-            if (!question) return;
-            alert("Mengirim pertanyaan ke Ahli Gizi AI...");
-            fetch(GAS_URL, {
-                method: "POST",
-                body: JSON.stringify({ action: "askAI", question: question })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === "success") {
-                    document.getElementById('aiResponseContainer').style.display = "block";
-                    document.getElementById('aiReplyText').innerText = data.reply;
-                } else {
-                    alert("Gagal mendapatkan jawaban.");
-                }
-            });
+            .then(data => { alert(data.message); backToDashboard(); });
         }
     </script>
 </body>

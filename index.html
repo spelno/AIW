@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Wellness & Nutrition Assistant</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #4caf50;
+            --bg-color: #f4f6f8;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        h2, h3 { color: var(--primary); margin-top: 0; }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 16px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        button {
+            background-color: var(--primary-light);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        button:hover { background-color: var(--primary); }
+        .btn-guest { background-color: #757575 !important; }
+        .hidden { display: none !important; }
+        
+        /* Thumbnail Card Layout */
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        .thumb-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+        .thumb-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background-color: #e0e0e0;
+        }
+        .thumb-content {
+            padding: 15px;
+        }
+        .thumb-title { font-size: 18px; font-weight: bold; margin-bottom: 5px; color: var(--primary); }
+        .thumb-desc { font-size: 14px; color: #666; margin-bottom: 10px; }
+        .badge { background: #e8f5e9; color: var(--primary); padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 5px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+        }
+        .nav-tabs button {
+            margin: 0;
+            white-space: nowrap;
+            background: #e0e0e0;
+            color: #333;
+            font-size: 13px;
+            padding: 8px 12px;
+        }
+        .nav-tabs button.active {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- HALAMAN LOGIN -->
+        <div id="loginSection" class="card" style="margin-top: 50px;">
+            <h2>Wellness Login</h2>
+            <p>Silakan masuk untuk memantau kesehatan Anda.</p>
+            <input type="text" id="username" placeholder="Username (cth: OD)">
+            <input type="password" id="password" placeholder="Password (cth: Maleto)">
+            <button onclick="handleLogin()">Masuk</button>
+            
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+            
+            <!-- Tombol Guest Paling Bawah Tanpa Password -->
+            <button class="btn-guest" onclick="handleGuestLogin()">Masuk sebagai Guest</button>
+        </div>
+
+        <!-- DASHBOARD UTAMA (TERSEMBUNYI SEBELUM LOGIN) -->
+        <div id="dashboardSection" class="hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 id="welcomeUser" style="margin:0;">Halo, User!</h3>
+                <button onclick="handleLogout()" style="width: auto; padding: 6px 12px; background: #d32f2f; font-size: 12px;">Keluar</button>
+            </div>
+
+            <!-- Navigasi Menu -->
+            <div class="nav-tabs">
+                <button class="active" onclick="switchTab('tabMealPlan', this)">Meal Plan</button>
+                <button onclick="switchTab('tabFoodLog', this)">Catat Makanan</button>
+                <button onclick="switchTab('tabPantry', this)">Stok Dapur</button>
+                <button onclick="switchTab('tabMedical', this)">Rekam Medis</button>
+                <button onclick="switchTab('tabAI', this)">Tanya AI</button>
+            </div>
+
+            <!-- TAB 1: MEAL PLAN & THUMBNAILS -->
+            <div id="tabMealPlan" class="app-tab">
+                <div class="card">
+                    <h3>Rencana Menu Harian Anda</h3>
+                    <button onclick="loadMealPlan()">Muat Rencana Menu</button>
+                    <div id="mealPlanContainer" class="thumbnail-grid" style="margin-top: 15px;">
+                        <p style="text-align: center; color: #777;">Klik tombol muat untuk melihat menu.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: CATAT MAKANAN & FOTO -->
+            <div id="tabFoodLog" class="app-tab hidden">
+                <div class="card">
+                    <h3>Pencatat Makanan & Foto Pintar</h3>
+                    <label>Ambil atau Unggah Foto Makanan:</label>
+                    <input type="file" id="foodPhoto" accept="image/*">
+                    <button onclick="processFoodPhoto()">Analisis Foto dengan AI</button>
+                    
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+                    
+                    <label>Waktu Makan:</label>
+                    <select id="waktuMakan">
+                        <option value="Sarapan">Sarapan</option>
+                        <option value="Makan Siang">Makan Siang</option>
+                        <option value="Makan Malam">Makan Malam</option>
+                        <option value="Cemilan">Cemilan</option>
+                    </select>
+                    
+                    <label>Nama Makanan:</label>
+                    <input type="text" id="namaMakanan" placeholder="cth: Nasi Merah + Dada Ayam">
+                    
+                    <label>Porsi (Gram):</label>
+                    <input type="number" id="porsiGram" value="100">
+                    
+                    <label>Kalori (kkal):</label>
+                    <input type="number" id="kalori" value="0">
+                    
+                    <button onclick="submitFoodLog()">Simpan ke Riwayat</button>
+                </div>
+            </div>
+
+            <!-- TAB 3: PANTRY / STOK DAPUR -->
+            <div id="tabPantry" class="app-tab hidden">
+                <div class="card">
+                    <h3>Manajemen Stok Dapur</h3>
+                    <input type="text" id="namaBahan" placeholder="Nama Bahan / Bumbu (cth: Bawang Putih)">
+                    <input type="text" id="kategoriBahan" placeholder="Kategori (cth: Bumbu / Protein)">
+                    <input type="number" id="jumlahBahan" placeholder="Jumlah / Stok">
+                    <input type="text" id="satuanBahan" placeholder="Satuan (cth: Siung / Gram / Botol)">
+                    <button onclick="submitPantry()">Tambah ke Stok</button>
+                </div>
+            </div>
+
+            <!-- TAB 4: REKAM MEDIS -->
+            <div id="tabMedical" class="app-tab hidden">
+                <div class="card">
+                    <h3>Rekam Medis & Lab</h3>
+                    <input type="date" id="medDate">
+                    <input type="text" id="jenisTes" placeholder="Jenis Pemeriksaan (cth: Tes Darah Rutin)">
+                    <input type="text" id="parameterHasil" placeholder="Parameter / Hasil (cth: Kolesterol 190 mg/dL)">
+                    <textarea id="catatanDokter" placeholder="Catatan / Saran Dokter" rows="3"></textarea>
+                    <button onclick="submitMedical()">Simpan Rekam Medis</button>
+                </div>
+            </div>
+
+            <!-- TAB 5: TANYA AI & Konsultasi -->
+            <div id="tabAI" class="app-tab hidden">
+                <div class="card">
+                    <h3>Konsultasi Ahli Gizi & Pelatih AI</h3>
+                    <textarea id="aiQuestion" placeholder="Tanyakan sesuatu (cth: Bolehkah saya mengganti dada ayam dengan ikan hari ini?)" rows="4"></textarea>
+                    <button onclick="askAI()">Kirim Pertanyaan</button>
+                    <div id="aiResponseContainer" style="margin-top: 15px; background: #f9f9f9; padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary); display:none;">
+                        <strong>Jawaban AI:</strong>
+                        <p id="aiReplyText" style="margin: 5px 0 0 0;"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
+        const GAS_URL = "https://script.google.com/macros/s/AKfycby.../exec"; 
+
+        let currentUser = localStorage.getItem('loggedUser') || null;
+
+        window.onload = function() {
+            if (currentUser) {
+                showDashboard();
+            }
+        }
+
+        function handleLogin() {
+            let user = document.getElementById('username').value;
+            let pass = document.getElementById('password').value;
+
+            fetch(GAS_URL, {
+                method: "POST",
+                body: JSON.stringify({ action: "login", username: user, password: pass })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    currentUser = data.user;
+                    localStorage.setItem('loggedUser', currentUser);
+                    showDashboard();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(err => alert("Gagal terhubung ke server: " + err));
+        }
+
+        function handleGuestLogin() {
+            currentUser = "Guest";
+            localStorage.setItem('loggedUser', currentUser);
+            showDashboard();
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('loggedUser');
+            currentUser = null;
+            document.getElementById('dashboardSection').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
+        }
+
+        function showDashboard() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('dashboardSection').classList.remove('hidden');
+            document.getElementById('welcomeUserinnerText').innerText = "Halo, " + currentUser + "!";
+            loadMealPlan();
+        }
+
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.app-tab').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            document.querySelectorAll('.nav-tabs button').forEach(el => el.classList.remove('active'));
+            btnElement.classList.add('active');
+        }
+
+        function loadMealPlan() {
+            fetch(GAS_URL, {
+                method: "POST",
+                body: JSON.stringify({ action: "getMealPlan", user: currentUser })
+            })
+            .then(res => res.json())
+            .then(data => {
+                let container = document.getElementById('mealPlanContainer');
+                container.innerHTML = "";
+                if (data.status === "success" && data.data.length > 0) {
+                    data.data.forEach(item => {
+                        let cardHTML = `
+                            <div class="thumb-card">
+                                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop" class="thumb-img" alt="Menu">
+                                <div class="thumb-content">
+                                    <div class="thumb-title">${item.namaMenu}</div>
+                                    <div class="thumb-desc">${item.hari} - ${item.waktuMakan}</div>
+                                    <span class="badge">Target: ${item.kaloriTarget} kkal</span>
+                                </div>
+                            </div>
+                        `;
+                        container.innerHTML += cardHTML;
+                    });
+                } else {
+                    container.innerHTML = "<p style='text-align:center; color:#777;'>Belum ada rencana menu untuk akun ini.</p>";
+                }
+            });
+        }
+
+        function processFoodPhoto() {
+            let fileInput = document.getElementById('foodPhoto');
+            if (fileInput.files.length === 0) {
+                alert("Pilih foto terlebih dahulu!");
+                return;
+            }
+            let file = fileInput.files[0];
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let base64Data = e.target.result.split(',')[1];
+                alert("Menganalisis foto dengan AI...");
+                
+                fetch(GAS_URL, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "analyzeFoodPhoto", imageBase64: base64Data, mimeType: file.type })
+                })
+                .then(res => res.json())
+                .then(resData => {
+                    if (resData.status === "success") {
+                        let info = resData.data;
+                        document.getElementById('namaMakanan').value = info.namaMakanan || "";
+                        document.getElementById('porsiGram').value = info.porsiGram || 100;
+                        document.getElementById('kalori').value = info.kalori || 0;
+                        alert("Analisis selesai! Periksa form pencatatan.");
+                    } else {
+                        alert("Gagal menganalisis foto: " + resData.message);
+                    }
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function submitFoodLog() {
+            let payload = {
+                action: "logFood",
+                user: currentUser,
+                waktuMakan: document.getElementById('waktuMakan').value,
+                namaMakanan: document.getElementById('namaMakanan').value,
+                porsi: document.getElementById('porsiGram').value,
+                kalori: document.getElementById('kalori').value
+            };
+            fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) })
+            .then(res => res.json())
+            .then(data => { alert(data.message); });
+        }
+
+        function submitPantry() {
+            let payload = {
+                action: "updatePantry",
+                user: currentUser,
+                namaBahan: document.getElementById('namaBahan').value,
+                kategori: document.getElementById('kategoriBahan').value,
+                jumlah: document.getElementById('jumlahBahan').value,
+                satuan: document.getElementById('satuanBahan').value
+            };
+            fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) })
+            .then(res => res.json())
+            .then(data => { alert(data.message); });
+        }
+
+        function submitMedical() {
+            let payload = {
+                action: "saveMedicalRecord",
+                user: currentUser,
+                tanggal: document.getElementById('medDate').value,
+                jenisPemeriksaan: document.getElementById('jenisTes').value,
+                parameter: document.getElementById('parameterHasil').value,
+                catatan: document.getElementById('catatanDokter').value,
+                rekomendasiAI: "Evaluasi mandiri"
+            };
+            fetch(GAS_URL, { method: "POST", body: JSON.stringify(payload) })
+            .then(res => res.json())
+            .then(data => { alert(data.message); });
+        }
+
+        function askAI() {
+            let question = document.getElementById('aiQuestion').value;
+            if (!question) return;
+            alert("Mengirim pertanyaan ke Ahli Gizi AI...");
+            fetch(GAS_URL, {
+                method: "POST",
+                body: JSON.stringify({ action: "askAI", question: question })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    document.getElementById('aiResponseContainer').style.display = "block";
+                    document.getElementById('aiReplyText').innerText = data.reply;
+                } else {
+                    alert("Gagal mendapatkan jawaban.");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

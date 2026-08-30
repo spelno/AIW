@@ -9,7 +9,7 @@
         :root {
             --primary: #059669;
             --primary-gradient: linear-gradient(135deg, #10b981 0%, #047857 100%);
-            --bg-color: #f1f5f9;
+            --bg-color: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
@@ -38,7 +38,7 @@
             justify-content: flex-start;
         }
         
-        /* Tema Login Biru Muda, Hijau, & Putih (Clean Glassmorphism) */
+        /* Tema Login Biru-Hijau Segar dengan Logo Lepas */
         .login-body {
             background: linear-gradient(135deg, #0284c7 0%, #38bdf8 40%, #10b981 100%);
             height: 100vh;
@@ -47,7 +47,7 @@
             justify-content: center;
         }
         .login-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-radius: 28px;
@@ -139,33 +139,39 @@
 
         .hidden { display: none !important; }
 
-        /* Header Dashboard */
-        .app-header-top {
-            text-align: center;
-            padding: 12px 0 16px 0;
-        }
-        .app-header-logo {
-            width: 70px;
-            height: 70px;
-            border-radius: 16px;
-            object-fit: cover;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-            border: 2px solid white;
-            margin-bottom: 4px;
-        }
-        
-        .greeting-card {
+        /* Header Dashboard Baru (Logo di Kiri, Sapaan & Nama User di Kanan) */
+        .dashboard-header-modern {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background: #fff;
-            padding: 16px 20px;
+            padding: 14px 20px;
             border-radius: 20px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
             margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-        .user-greeting { font-weight: 700; color: var(--primary); font-size: 15px; margin: 0; }
+        .header-left-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header-logo-small {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+        }
+        .header-user-info {
+            text-align: right;
+        }
+        .user-greeting {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 15px;
+            margin: 0;
+        }
 
         /* Grid Dashboard Utama */
         .dashboard-grid {
@@ -212,7 +218,7 @@
 
     <div class="app-wrapper" id="wrapperTag">
         
-        <!-- HALAMAN LOGIN DENGAN LOGO LEPAS & TEMA BIRU-HIJAU SEGAR -->
+        <!-- HALAMAN LOGIN DENGAN LOGO LEPAS -->
         <div id="loginSection" class="login-card">
             <div style="margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center;">
                 <img src="Logo.png" alt="Logo" style="max-width: 140px; height: auto; object-fit: contain;" onerror="this.style.display='none'">
@@ -233,18 +239,18 @@
         <!-- DASHBOARD UTAMA -->
         <div id="dashboardSection" class="hidden" style="width: 100%;">
             
-            <!-- Header Logo -->
-            <div class="app-header-top">
-                <img src="Logo.png" alt="Logo" class="app-header-logo" onerror="this.style.display='none'">
-            </div>
-
-            <!-- Kartu Sapaan Pengguna -->
-            <div class="greeting-card">
-                <div>
-                    <p style="margin:0; font-size: 11px; color: var(--text-muted);">Selamat datang,</p>
-                    <h3 id="welcomeUser" class="user-greeting" style="margin:0;">User</h3>
+            <!-- Header Dashboard Modern (Logo di Kiri, Nama User di Kanan) -->
+            <div class="dashboard-header-modern">
+                <div class="header-left-brand">
+                    <img src="Logo.png" alt="Logo" class="header-logo-small" onerror="this.style.display='none'">
                 </div>
-                <button class="btn-danger" onclick="handleLogout()">Keluar</button>
+                <div class="header-user-info">
+                    <p style="margin:0; font-size: 11px; color: var(--text-muted);">Halo,</p>
+                    <h3 id="welcomeUser" class="user-greeting">User</h3>
+                </div>
+                <div>
+                    <button class="btn-danger" onclick="handleLogout()">Keluar</button>
+                </div>
             </div>
 
             <!-- Grid Menu Utama -->
